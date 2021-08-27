@@ -1,0 +1,96 @@
+# Excercise2
+Excercise02
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Exercise02
+    public class NumbersTowords
+{
+    int positive_number = 0;
+    List<string> ones = new List<string> { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    List<string> teens = new List<string> { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+    List<string> tens = new List<string> { "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+    string words = "";
+    public textMeshProUGUI display_words;
+    const string hundred_text = "hundred";
+    const string thousand_text = "thousand";
+    const string million_text = "million";
+    public void Convert()
+    {
+        positive_number = Int32.Parse(positive_number_inputfield.text);
+        display_words.text = ConvertNumbersTowords(positive_number);
+    }
+    string ConvertNumberToWords(int number)
+    {
+        if (number <10)
+        {
+            getTheUnits(number);
+        }
+        else if (number<20)
+        {
+            getTheTeens(number);
+        }
+        else if (number<100)
+        {
+            getTheTens(number); 
+        }
+        else if (number<1000)
+        {
+            getTheHundreds(number);
+        }
+        else if (number<1000000)
+        {
+            getTheThousands(number);
+        }
+        else if (number<1000000000)
+        {
+            getTheMillions(number);
+        }
+        else
+        {
+            getTheBillions(number);
+        }
+        return words;
+    }
+    string getTheUnits(int number)
+    {
+        words = ones[number];
+        return words;
+    }
+    string getTheTeens(int number)
+    {
+        words = teens[number - 10];
+        return words;
+    }
+    string getTheTens(int number)
+    {
+        words = tens[number / 10] + ((number % 10 != 0) ? "" + getTheUnits(number % 10) : "");
+            return words;
+    }
+    string getTheHundreds(int number)
+    {
+       if (number % 100 !=0 && % 100 <10)
+        {
+            words = getTheUnits(number / 100) + hundred_text + "" + getTheUnits(number % 100);
+        }
+       else if (number % 100 !=0 && number % 100 > 10 && number % 100 < 20)
+        {
+            words = getTheUnits(number / 100) + hundred_text + " " + getTheTeens(number % 100);
+        }
+        else
+        {
+            words = getTheUnits(number / 100) + hundred_text + ((number % 100 != 0) ? " " + ConvertNumbersTowords(number % 100) : "");
+        }
+       string getTheThousands (int number)
+        {
+            words = ConvertNumberToWords(number / 1000) + thousand_text + ((number % 1000 != 0) ? "" + ConvertNumberToWords(number % 1000) : "");
+        }
+        return words;
+    }
+    string getTheMillions (int number)
+    {
+        words = ConvertNumberToWords(number / 1000000) + million_text + ((number % 1000000 != 0) ? "" + ConvertNumberToWords(number % 1000000) : "");
+        return words;
+    }
+}
